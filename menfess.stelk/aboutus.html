@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - menfess.stelk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-red-600">Tentang Kami</h1>
+        <a class="text-xl text-gray-600 hover:text-black" href="inihome.html" title="Kembali ke Beranda"><i class="fas fa-arrow-left"></i></a>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-10">
+        <section class="bg-white p-8 rounded-xl shadow-md">
+            <h2 class="text-3xl font-bold mb-4 text-red-600">SMK Telkom Makassar</h2>
+            <p class="text-lg mb-6">
+                SMK Telkom Makassar adalah sekolah menengah kejuruan unggulan yang berfokus pada pengembangan teknologi informasi dan komunikasi. Dengan fasilitas modern dan kurikulum yang relevan, sekolah ini mendorong siswa menjadi lulusan yang kompeten dan siap menghadapi dunia kerja.
+            </p>
+
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Tentang Pembuat Website</h3>
+            <ul class="list-disc list-inside text-lg space-y-2">
+                <li><button onclick="showBio('daim')" class="text-red-600 hover:underline">Da'im Abdillah Algufran R.</button></li>
+                <li><button onclick="showBio('indhana')" class="text-red-600 hover:underline">Indhana Putri Raqikah Awal</button></li>
+                <li><button onclick="showBio('nafla')" class="text-red-600 hover:underline">Andi Nafla Nasyifa</button></li>
+            </ul>
+            <p class="mt-4">
+                Website <strong>menfess.stelk</strong> dikembangkan sebagai proyek kreatif untuk memberikan platform yang aman dan menyenangkan bagi pelajar dalam menyampaikan pesan secara anonim.
+            </p>
+        </section>
+    </main>
+
+    <!-- Modal Biodata -->
+    <div id="bioModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative">
+            <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-600 hover:text-black text-xl">&times;</button>
+            <h3 id="bioName" class="text-2xl font-bold mb-4 text-red-600"></h3>
+            <p id="bioContent" class="text-gray-700 leading-relaxed"></p>
+        </div>
+    </div>
+
+    <footer class="text-center text-sm text-gray-500 py-6">
+        © 2025 menfess.stelk. Dibuat oleh tim siswa SMK Telkom Makassar.
+    </footer>
+
+    <script>
+        const bioData = {
+            daim: {
+                name: "Da'im Abdillah Algufran Ramadhan",
+                content: `
+                    <strong>Kelas:</strong> XII TKJ 3<br/>
+                    <strong>IG:</strong> @ddre1m<br/>
+                    <strong>Kesan:</strong> "yg penting lulus mpp......"
+                `
+            },
+            indhana: {
+                name: "Indhana Putri Raqikah Awal",
+                content: `
+                    <strong>Kelas:</strong> XII TKJ 3<br/>
+                    <strong>IG:</strong> @ra_rraa<br/>
+                    <strong>Kesan:</strong> "rawr"
+                `
+            },
+            nafla: {
+                name: "Andi Nafla Nasyifa",
+                content: `
+                    <strong>Kelas:</strong> XII TKJ 3<br/>
+                    <strong>IG:</strong> @andinflaa<br/>
+                    <strong>Kesan:</strong> "hzhzhhzhzh"
+                `
+            }
+        };
+
+        function showBio(key) {
+            const modal = document.getElementById('bioModal');
+            const nameElem = document.getElementById('bioName');
+            const contentElem = document.getElementById('bioContent');
+
+            if (bioData[key]) {
+                nameElem.textContent = bioData[key].name;
+                contentElem.innerHTML = bioData[key].content;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('bioModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>menfess.stelk - Platform Menfess Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #ef4444, #b91c1c, #7f1d1d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <h1 class="text-2xl font-bold gradient-text">menfess.stelk</h1>
+        <div class="space-x-4 text-xl text-gray-600">
+            <a class="hover:text-black" href="file:///C:/Users/daima/Downloads/menfess.stelk/inihome.html" title="Home"><i class="fas fa-home"></i></a>
+            <a class="hover:text-black" href="file:///C:/Users/daima/Downloads/menfess.stelk/inisearch.html" title="Search"><i class="fas fa-search"></i></a>
+            <a class="hover:text-black" href="file:///C:/Users/daima/Downloads/menfess.stelk/aboutus.html" title="About Us"><i class="fas fa-info-circle"></i></a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <!-- Hero Section / About Menfess.stelk -->
+        <section class="text-center mb-12 bg-white p-8 rounded-xl shadow-md">
+            <h2 class="text-4xl font-bold gradient-text mb-4">Selamat Datang di menfess.stelk!</h2>
+            <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+                menfess.stelk adalah platform modern dan anonim untuk berbagi pesan rahasia, pengakuan, atau ungkapan hati kepada teman, crush, atau siapa pun di lingkungan sekolahmu. Sampaikan apa yang ada di pikiranmu tanpa ragu, dan biarkan pesanmu menemukan jalannya.
+            </p>
+            <p class="text-md text-gray-600 mt-4">
+                Kami percaya setiap suara berhak didengar. Mari ciptakan komunitas yang jujur dan suportif!
+            </p>
+        </section>
+
+    <!-- Terms and Conditions Modal -->
+    <div id="termsModal" class="modal fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="modal-content bg-white p-8 rounded-xl shadow-2xl max-w-2xl w-full mx-4 transform transition-all duration-300 scale-95">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Syarat & Ketentuan Pengiriman Menfess</h3>
+            <div class="text-gray-700 text-sm leading-relaxed mb-6">
+                <p class="mb-2">Dengan mengirimkan menfess, Anda menyetujui hal-hal berikut:</p>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>Menfess harus bersifat positif, membangun, dan tidak mengandung unsur SARA, ujaran kebencian, diskriminasi, atau konten negatif lainnya.</li>
+                    <li>Menfess tidak boleh mengandung informasi pribadi yang sensitif atau rahasia tentang orang lain.</li>
+                    <li>Menfess yang melanggar aturan akan dihapus tanpa pemberitahuan.</li>
+                    <li>Platform ini tidak bertanggung jawab atas isi menfess yang dikirimkan oleh pengguna.</li>
+                    <li>Penggunaan fitur Spotify harus mematuhi kebijakan penggunaan Spotify.</li>
+                    <li>Kami berhak untuk memoderasi atau menolak menfess yang dianggap tidak sesuai.</li>
+                    <li>Dengan melanjutkan, Anda memahami bahwa menfess Anda akan dipublikasikan secara anonim (kecuali Anda mencantumkan nama pengirim).</li>
+                </ul>
+                <p class="mt-4 font-semibold text-red-600">Penting: Jaga selalu etika dan sopan santun dalam setiap pesan yang Anda kirimkan.</p>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button id="closeModalBtn" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-full font-medium hover:bg-gray-400 transition">Batal</button>
+                <a href="file:///C:/Users/daima/Downloads/menfess.stelk/menfess_stelk_final.html" class="bg-red-600 text-white px-6 py-2 rounded-full font-medium hover:bg-red-700 transition">Lanjut</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const termsModal = document.getElementById('termsModal');
+
+        openModalBtn.addEventListener('click', () => {
+            termsModal.classList.remove('hidden');
+            setTimeout(() => {
+                termsModal.querySelector('.modal-content').classList.remove('scale-95');
+                termsModal.querySelector('.modal-content').classList.add('scale-100');
+            }, 50);
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            termsModal.querySelector('.modal-content').classList.remove('scale-100');
+            termsModal.querySelector('.modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                termsModal.classList.add('hidden');
+            }, 300);
+        });
+
+        // Close modal when clicking outside
+        termsModal.addEventListener('click', (e) => {
+            if (e.target === termsModal) {
+                closeModalBtn.click();
+            }
+        });
+    </script>
+
+<section class="mb-12">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Menfess Terbaru</h2>
+    <div id="latestMenfess" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyClNCIpmQqDoOcr5C8Lp1t0zSVO3Iyubyw",
+        authDomain: "menfess-stelk.firebaseapp.com",
+        databaseURL: "https://menfess-stelk-default-rtdb.firebaseio.com",
+        projectId: "menfess-stelk",
+        storageBucket: "menfess-stelk.firebasestorage.app",
+        messagingSenderId: "328279558679",
+        appId: "1:328279558679:web:fee8fecad07aa8361eea52",
+        measurementId: "G-LC8Q76F9BV"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("latestMenfess");
+        if (!container) return;
+
+        firebase.database().ref("menfess").on("value", snapshot => {
+            container.innerHTML = "";
+            const items = [];
+            snapshot.forEach(child => {
+                const val = child.val();
+                val.timestamp = val.timestamp || 0;
+                items.push(val);
+            });
+
+            // Urutkan terbaru dulu
+            items.sort((a, b) => b.timestamp - a.timestamp);
+
+            // Ambil 3 terbaru
+            items.slice(0, 3).forEach(item => {
+                const card = document.createElement("div");
+                card.className = "bg-white p-6 rounded-xl shadow-md card";
+                card.innerHTML = `
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-user-circle text-red-500 text-2xl mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-800">${item.from || '-'}</h3>
+                    </div>
+                    <p class="text-gray-700 mb-4">"${item.pesan}"</p>
+                    <div class="text-right text-sm text-gray-500">
+                        <span class="font-medium">To: ${item.nama} ${item.kelas}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        });
+    });
+</script>
+
+        <!-- Submit Menfess Button -->
+        <section class="text-center">
+            <button id="openModalBtn" class="bg-gradient-to-r from-red-600 to-black text-white px-10 py-4 rounded-full font-bold text-xl hover:opacity-90 transition duration-300 shadow-xl transform hover:scale-105">
+                Kirim Menfess Sekarang! <i class="fas fa-paper-plane ml-3"></i>
+            </button>
+        </section>
+    </main>
+
+        <!-- Footer -->
+    <footer class="text-center text-sm text-gray-500 py-6 mt-8">
+        © 2025 menfess.stelk. Hak Cipta Dilindungi.
+    </footer>
+
+</body>
+</html>

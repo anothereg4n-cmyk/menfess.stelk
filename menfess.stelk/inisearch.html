@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>menfess.stelk - Platform Menfess Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #ef4444, #b91c1c, #7f1d1d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <h1 class="text-2xl font-bold gradient-text">menfess.stelk</h1>
+        <div class="space-x-4 text-xl text-gray-600">
+            <a class="hover:text-black" href="inihome.html" title="Home"><i class="fas fa-home"></i></a>
+            <a class="hover:text-black" href="inisearch.html" title="Cari"><i class="fas fa-search"></i></a>
+            <a class="hover:text-black" href="aboutus.html" title="About Us"><i class="fas fa-info-circle"></i></a>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <main class="max-w-4xl mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-6">Cari Menfess</h1>
+        <input type="text" placeholder="Cari berdasarkan nama, kelas, atau kata kunci..." class="w-full p-3 mb-4 border border-gray-300 rounded" id="searchInput" />
+        <p id="countText" class="text-gray-600 mb-4"></p>
+        <div id="resultContainer" class="grid grid-cols-1 gap-4"></div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyClNCIpmQqDoOcr5C8Lp1t0zSVO3Iyubyw",
+            authDomain: "menfess-stelk.firebaseapp.com",
+            databaseURL: "https://menfess-stelk-default-rtdb.firebaseio.com",
+            projectId: "menfess-stelk",
+            storageBucket: "menfess-stelk.firebasestorage.app",
+            messagingSenderId: "328279558679",
+            appId: "1:328279558679:web:fee8fecad07aa8361eea52",
+            measurementId: "G-LC8Q76F9BV"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.getElementById("resultContainer");
+            const countText = document.getElementById("countText");
+            const searchInput = document.getElementById("searchInput");
+            const dbRef = firebase.database().ref("menfess");
+
+            function renderList(filter = "") {
+                dbRef.on("value", snapshot => {
+                    container.innerHTML = "";
+                    const all = [];
+                    snapshot.forEach(child => {
+                        const data = child.val();
+                        all.push({ id: child.key, ...data });
+                    });
+
+                    const filtered = all.filter(item =>
+                        item.nama.toLowerCase().includes(filter) ||
+                        item.kelas.toLowerCase().includes(filter) ||
+                        item.pesan.toLowerCase().includes(filter)
+                    );
+
+                    countText.textContent = `${filtered.length} menfess ditemukan`;
+
+                    filtered.reverse().forEach(item => {
+                        const card = document.createElement("div");
+                        card.className = "bg-white p-6 rounded-xl shadow-md";
+                        card.innerHTML = `
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <h3 class="text-lg font-semibold">${item.from || '-'}</h3>
+                                    <p class="text-gray-700 mt-2">${item.pesan}</p>
+                                    <p class="text-sm text-gray-500 mt-1 text-right">To: ${item.nama} (${item.kelas})</p>
+                                </div>
+                                <button onclick="deleteMenfess('${item.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                });
+            }
+
+            searchInput.addEventListener("input", e => {
+                renderList(e.target.value.toLowerCase());
+            });
+
+            renderList();
+        });
+
+        function deleteMenfess(id) {
+            if (confirm("Yakin ingin menghapus menfess ini?")) {
+                firebase.database().ref("menfess/" + id).remove()
+                    .then(() => alert("Menfess dihapus"))
+                    .catch(err => alert("Gagal menghapus: " + err));
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>menfess.stelk - Platform Menfess Modern</title>
+<script src="https://cdn.tailwindcss.com">
+
+</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #ef4444, #b91c1c, #7f1d1d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- Header -->
+<header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+<h1 class="text-2xl font-bold gradient-text">menfess.stelk</h1>
+<div class="space-x-4 text-xl text-gray-600">
+<a class="hover:text-black" href="file:///C:/Users/daima/Downloads/menfess.stelk/inihome.html" title="Home"><i class="fas fa-home"></i></a>
+<a class="hover:text-black" href="file:///C:/Users/daima/Downloads/menfess.stelk/inisearch.html" title="Cari"><i class="fas fa-search"></i></a>
+<a class="hover:text-black" href="file:///C:/Users/daima/Downloads/menfess.stelk/aboutus.html" title="About Us"><i class="fas fa-info-circle"></i></a>
+</div>
+</header>
+<main class="container mx-auto px-4 py-8">
+<!-- Confession Submission Form -->
+<main class="container mx-auto px-4 py-8">
+<section class="max-w-2xl mx-auto mb-12 bg-white rounded-xl shadow-md overflow-hidden">
+  <div class="p-6">
+    <h3 class="text-xl font-semibold mb-4">Kirimkan Menfess Anda</h3>
+    <form id="confessionForm" onsubmit="submitForm(event)">
+      <div class="mb-4">
+        <label class="block mb-1">Kelas:</label>
+        <input type="text" id="classSelect" class="border w-full px-3 py-2" placeholder="Contoh: XII TKJ 3" />
+      </div>
+      <div class="mb-4">
+        <label class="block mb-1">Nama:</label>
+        <input type="text" id="nameSelect" class="border w-full px-3 py-2" placeholder="Contoh: Nama Lengkap" />
+      </div>
+      <div class="mb-4">
+        <label class="block mb-1">Dari (opsional):</label>
+        <input type="text" id="fromInput" placeholder="Nama pengirim (opsional)" class="border w-full px-3 py-2" />
+      </div>
+      <div class="mb-4">
+        <label class="block mb-1">Pesan:</label>
+        <textarea id="confessionText" class="border w-full px-3 py-2" rows="4" required></textarea>
+      </div>
+      <div class="flex justify-end">
+        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700">Kirim</button>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyClNCIpmQqDoOcr5C8Lp1t0zSVO3Iyubyw",
+  authDomain: "menfess-stelk.firebaseapp.com",
+  databaseURL: "https://menfess-stelk-default-rtdb.firebaseio.com",
+  projectId: "menfess-stelk",
+  storageBucket: "menfess-stelk.firebasestorage.app",
+  messagingSenderId: "328279558679",
+  appId: "1:328279558679:web:fee8fecad07aa8361eea52",
+  measurementId: "G-LC8Q76F9BV"
+};
+  firebase.initializeApp(firebaseConfig);
+
+  function submitForm(e) {
+    e.preventDefault();
+    const kelas = document.getElementById('classSelect').value.trim();
+    const nama = document.getElementById('nameSelect').value.trim();
+    const from = document.getElementById('fromInput').value.trim();
+    const pesan = document.getElementById('confessionText').value.trim();
+
+    if (!kelas || !nama || !pesan) {
+      alert("Mohon isi semua kolom wajib.");
+      return;
+    }
+
+    const menfess = { kelas, nama, from, pesan, timestamp: Date.now() };
+
+    firebase.database().ref("menfess").push(menfess)
+      .then(() => {
+        alert("Menfess berhasil dikirim!");
+        window.location.href = "inisearch.html";
+      })
+      .catch(err => alert("Gagal mengirim: " + err));
+  }
+</script>
+
+<!-- Footer -->
+<footer class="text-center text-sm text-gray-500 py-6">
+    © 2025 menfess.stelk. Hak Cipta Dilindungi.
+</footer>
+</body>
+</html>
